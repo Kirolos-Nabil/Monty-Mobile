@@ -1,0 +1,98 @@
+{% extends 'assignments/layout.html' %}
+
+{% load static %}
+
+
+{% block body %}
+
+    {% if message %}
+    </br>
+    <div style="color: red;">{{ message }}</div>
+    {% endif %}
+
+    {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="row container">
+        <div class="col-xl-12 d-flex">
+            <div class="card flex-fill">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">EDIT USER</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'app2:edit_user' id=id%}" method="post">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>UserName</label>
+                                <input type="text" class="form-control" placeholder="Enter username" name="UserName" value="{{ username }}" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="">Email</label>
+                                <input type="text" class="form-control" placeholder="Enter Email Address " name="Email" value="{{ email }}" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <h5 class="card-title">Active Status</h5>
+                                {% if active %}
+                                <label for="inputActive">Active</label>
+                                <input id="inputActive" type="radio" name="Active" value="1" checked required>
+                                </br>
+                                <label for="inputActive">Not Active</label>
+                                <input id="inputActive" type="radio" name="Active" value="0">
+                                {% else %}
+                                <label for="inputActive">Active</label>
+                                <input id="inputActive" type="radio" name="Active" value="1">
+                                </br>
+                                <label for="inputActive">Not Active</label>
+                                <input id="inputActive" type="radio" name="Active" value="0" checked required>
+                                {% endif %}
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                <h5 class="card-title">Staff Status</h5>
+                                {% if staff %}
+                                <label for="inputStaff">Staff</label>
+                                <input id="inputStaff" type="radio" name="Staff" value="1" checked required>
+                                </br>
+                                <label for="inputStaff">Not Staff</label>
+                                <input id="inputStaff" type="radio" name="Staff" value="0">
+                                {% else %}
+                                <label for="inputStaff">Staff</label>
+                                <input id="inputStaff" type="radio" name="Staff" value="1">
+                                </br>
+                                <label for="inputStaff">Not Staff</label>
+                                <input id="inputStaff" type="radio" name="Staff" value="0" checked required>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                
+                
+                        <div class="row">
+                            
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-main" style="float: right;">Edit</button>
+                            </div>
+                
+                            
+                            <div class="col-6">
+                                <a href="../../"><button type="button" class="btn btn-main">Cancel</button></a>
+                            </div>
+                            
+                        </div>
+                
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,173 @@
+{% extends 'assignments/layout.html' %}
+
+{% load static %}
+
+{% block body %}
+
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <script>alert("{{ message.tags }}:  {{ message }}");</script>
+    <!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
+    {% endfor %}
+</ul>
+{% endif %}
+
+<!--____________table row____________ -->
+<div class="container">
+
+    <div id="toolbar" class="select d-flex">
+            
+        <select class="form-control both mx-1">
+            <option value="">Export Basic</option>
+            <option value="all">Export All</option>
+            <option value="selected">Export Selected</option>
+            
+        </select>
+        {% comment %} <a href="{% url 'app2:create_user' %}"><button id="" class="btn btn-primary both zoza">ADD</button></a> {% endcomment %}
+        
+    </div>
+    <!-- _________________table__________________ -->
+
+    <table id="table" class="table table-striped text-center" style="font-size: 12px;" 
+        id="table"
+        data-toggle="table" 
+        data-show-columns-toggle-all="true" 
+        data-pagination="true"
+        data-search="true" 
+        data-toolbar="#toolbar"
+        data-toolbar-align="right"
+        data-show-print="true" 
+        data-show-export="true"
+        data-click-to-select="true" 
+        data-search-align="left"
+        data-show-columns="true" 
+        data-show-toggle="true"
+        {% comment %} data-show-refresh="true"  {% endcomment %}
+        data-show-fullscreen="true" 
+        {% comment %} data-show-pagination-switch="true" {% endcomment %}
+        data-page-list="[5,10,20,30,40,50,All]" 
+        data-id-table="advancedTable" 
+        data-filter-control="true"
+        data-response-handler="responseHandler"
+        >
+
+        <thead>
+            <tr>
+                <th data-field="state" data-checkbox="true" data-visible="true"></th>
+                <th data-field="id" data-sortable="true" data-filter-control="input" data-switchable="true"> ID</th>
+                <th data-field="Username" data-sortable="true" data-filter-control="input">Username</th>
+                <th data-field="Email" data-sortable="true" data-filter-control="input">Email</th>
+                <th data-field="Active" data-sortable="true" data-filter-control="input">Active</th>
+                <th data-field="Type" data-sortable="true" data-filter-control="input">Type</th>
+                {% if user.is_superuser %}
+                <th data-field="Edit" data-sortable="true"  data-filter-control="input">Edit</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for UsersData in Users %}
+                <tr>
+                    <td></td>
+                    <td>{{UsersData.id}}</td>
+                    <td>{{UsersData.username}}</td>
+                    <td>{{UsersData.email}}</td>
+                    <td>{{UsersData.is_active}}</td>
+                    <td>
+                        {% if UsersData.is_staff  %}
+                        Staff 
+                        {% else %}
+                        Guest 
+                        {% endif %}
+                    </td>
+                    {% if user.is_superuser %}
+                    {% comment %} <td><a href="#"><button class="btn btn-primary">Edit</button></a></td> {% endcomment %}
+                    <td><a href="{% url 'app2:edit_user' id=UsersData.id %}"><button class="btn btn-primary">Edit</button></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+    <!-- _________________end table__________________ -->
+</div>
+<!--____________end table row____________-->
+
+{% endblock %}
+
+
+{% block bottom_script %}
+<script src="{% static 'js/jquery.min.js'%}"></script>
+<script src="{% static 'js/popper.min.js'%}"></script>
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+<script src="{% static 'js/tableExport.min.js'%}"></script>
+<script src="{% static 'js/unpkg/jspdf.min.js'%}"></script>
+<script src="{% static 'js/cdnjs/jspdf.min.js'%}"></script>
+<script src="{% static 'js/jspdf.plugin.autotable.js'%}"></script>
+<script src="{% static 'bootstrap-table-master/dist/bootstrap-table.min.js'%}"></script>
+<script src="{% static 'bootstrap-table-master/dist/extensions/export/bootstrap-table-export.js' %}"></script>
+<script src="{% static 'bootstrap-table-master/dist/extensions/print/bootstrap-table-print.js' %}"></script>
+<script src="{% static 'bootstrap-table-master/dist/extensions/toolbar/bootstrap-table-toolbar.js' %}"></script>
+<script src="{% static 'bootstrap-table-master/dist/extensions/filter-control/bootstrap-table-filter-control.js' %}"></script>
+<script>
+    var $table = $('#table')
+    var $remove = $('#remove')
+    var $add = $('#add')
+    var selections = []
+
+    function getIdSelections() {
+        return $.map($table.bootstrapTable('getSelections'), function (row) {
+            return row.id
+        })
+    }
+
+    function responseHandler(res) {
+        $.each(res.rows, function (i, row) {
+            row.state = $.inArray(row.id, selections) !== -1
+        })
+        return res
+    }
+
+    function initTable() {
+        $table.on('check.bs.table uncheck.bs.table ' +
+            'check-all.bs.table uncheck-all.bs.table',
+            function () {
+                $remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                // save your data, here just save the current page
+                selections = getIdSelections()
+                // push or splice the selections if you want to save all data selections
+            })
+        $remove.click(function () {
+            var ids = getIdSelections()
+            $table.bootstrapTable('remove', {
+                field: 'id',
+                values: ids
+            })
+            $remove.prop('disabled', true)
+        })
+        $add.click(function () {
+            console.log("add");
+            $table.bootstrapTable('insertRow', {
+                index: 0,
+                row: {
+                    state: "",
+                    id: 2,
+                    category: 'Category',
+                    subcategory: 'Subcategory',
+                    creator: 'creator',
+                    status: 'Status',
+                    Edit: '<a href="#"><button class="btn btn-primary">Edit</button></a>',
+                }
+            })
+        })
+    }
+
+    $(function () {
+        initTable()
+        
+    })
+
+</script>
+{% endblock %}

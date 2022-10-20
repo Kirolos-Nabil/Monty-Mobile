@@ -1,0 +1,67 @@
+{% extends 'assignments/login.html' %}
+
+{% load static %}
+
+
+{% block body %}
+
+    {% if message %}
+        </br>
+        <div style="color: red;">{{ message }}</div>
+    {% endif %}
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    <!--____________form row____________ -->
+    <div class="title mb-3">Create New User</div>
+    <!-- _________________form__________________ -->
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-row">
+            <!-- _________________nameInput__________________ -->
+            <div class="form-group col-md-12">
+                <label for="inputName">Username</label>
+                <input type="text" name="username" class="form-control" id="inputName" placeholder="Username" required>
+            </div>
+            <!-- _________________end nameInput__________________ -->
+            <!-- _________________emailInput__________________ -->
+            <div class="form-group col-md-12">
+                <label for="inputEmail">Email Address</label>
+                <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email Address" required>
+            </div>
+            <!-- _________________end emailInput__________________ -->
+            <!-- _________________passwordInput__________________ -->
+            <div class="form-group col-md-6">
+                <label for="inputPassword">Password</label>
+                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputConfirm">Confirm Password</label>
+                <input type="password" name="confirmation" class="form-control" id="inputConfirm" placeholder="Confirm Password" required>
+            </div>
+            <!-- _________________end passwordInput__________________ -->
+        </div>
+        
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-danger" style="float: right;">CREATE</button>
+            </div>
+            <div class="col-6">
+                <a href="../"><button type="button" class="btn btn-danger">Cancel</button></a>
+            </div>
+        </div>
+    </form>
+    <!-- _________________end form__________________ -->
+    <!--____________end form row____________-->
+    
+    
+{% endblock %}
+

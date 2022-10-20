@@ -1,0 +1,136 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body
+{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background:linear-gradient(135deg , #e67171, #451212) ;
+
+}
+.layer
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+}
+.company_logo {
+    margin: auto;
+    display: inline;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.container
+{
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 5px;
+}
+.container .title
+{
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+}
+.container .title::before
+{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 70px;
+    background:linear-gradient(135deg , #a42b2b, #df7777) ;
+    
+}
+
+.container form .user-details
+{
+    display: block;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+form .user-details .input-box
+{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 100% ;
+}
+.user-details .input-box .details
+{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.user-details .input-box input 
+{
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border:1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+}
+
+.user-details .input-box input:focus ,
+.user-details .input-box input:valid
+{
+   border-color: #b65959;
+}
+form .button
+{
+    height: 45px;
+    margin: 45px 0;
+}
+form .button input
+{
+    height: 100%;
+    width: 100%;
+    outline: none;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background:linear-gradient(135deg , #a42b2b, #df7777) ;
+}
+form .button input:hover 
+{
+    background:linear-gradient(-135deg , #a42b2b77, #df777777) ;
+}
+
+@media (max-width: 584px)
+{
+    .container
+    {
+        max-width: 100%;
+    }
+    form .user-details .input-box
+    {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    .container form .user-details
+    {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+
+}

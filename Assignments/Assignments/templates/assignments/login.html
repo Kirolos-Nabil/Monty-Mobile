@@ -1,0 +1,72 @@
+{% load static %}
+
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Responsive Form</title>
+        <meta name="viewport" content="width=device-width ,initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'assignments/bootstrap.css'%}">
+        <link rel="stylesheet" href="{% static 'assignments/bootstrap.min.css'%}">
+        <link rel="stylesheet" href="{% static 'assignments/all.css'%}"> 
+        <link rel="stylesheet" href="{% static 'assignments/login.css' %}">
+
+
+    </head>
+    <body style="background: url({% static 'images/login page banner.png' %}) no-repeat; background-size: cover; background-repeat: no-repeat; background-position: center;">
+        <div class="layer"></div>
+
+            <div class="container">
+                <div class="mx-1 my-5">
+                <img class="company_logo" src="{% static 'images/Monty-Mobile-Logo-Black.png'%}" width="250px" style="margin: auto;display: block;">
+                </div>
+                {% block body %}
+                    
+                    <div class="title">Sign in here</div>
+                    {% if message %}
+                        <div style="color: red;">{{ message }}</div></br>
+                    {% endif %}
+
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <script>alert("{{ message.tags }}:  {{ message }}");</script>
+                        <!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    
+
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="user-details">
+                            <div class="input-box">
+                                <span class="details">UserName</span>
+                                <input type="text" placeholder="Enter username" name="username" required>
+
+                            </div>
+            
+                
+                            <div class="input-box">
+                                <span class="details">Password</span>
+                                <input type="password" placeholder="Enter  password" name="password" required>
+
+                            </div>
+                        </div>
+
+
+                        <div class="input-box">
+                            <a href="{% url 'app2:create_user' %}" class="">Create New Account !</a>
+                        </div>
+
+
+                        <div class="button">
+                            <input type="submit" value="LOGIN">
+                        </div>
+
+                    </form>
+
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
