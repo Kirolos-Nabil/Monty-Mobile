@@ -21,5 +21,8 @@ from Assignments import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login', views.login_view, name="login"),
+    path('', include("app1.urls")),
     path('', include("app2.urls")),
+    path('', include("app4.urls")),
+    path('api/', include('api_app.urls')),
 ]

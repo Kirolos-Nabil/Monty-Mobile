@@ -1,0 +1,16 @@
+{% extends 'assignments/layout.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<div class="d-flex justify-content-between align-items-center">
+    <label class="m-5">A-Shared-Key</label>
+    <p class="card-title">{{a_shared_key}}</p>
+</div>
+<div class="d-flex justify-content-between align-items-center">
+    <label class="m-5">B-Shared-Key</label>
+    <p class="card-title">{{b_shared_key}}</p>
+</div>
+                
+{% endblock %}
